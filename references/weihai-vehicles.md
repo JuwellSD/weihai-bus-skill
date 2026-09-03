@@ -42,6 +42,16 @@ weihai vehicles 3710000100128319 --json
 
 `--json` 返回单个 {route, nextBuses:{...}, stops:[...]}。`stops` 每项是 `{route_stop:{seq_no,stop_id,stop_name,lat,lng,...}, buses:[...]}`,`buses` 为该站即将到达的车辆数组(非运营时段为空)。
 
+### 运营状态提示
+
+当整条线路**无在线车辆**时,CLI 会按该线的首/末班时间与当前时刻自动补一行与官方 App 一致的文案:
+
+- 当前未到首班 → `状态: 非车辆运营时间（06:00 发车）`
+- 已过末班 → `状态: 非车辆运营时间（已过末班）`
+
+这是 CLI 本地根据 `first_bus`/`last_bus` 推断的,不是接口返回的 `no_bus_desc`(该字段常为空)。
+`--json` 模式不加这行(由调用方自行判断)。
+
 ## side_effect
 
 - 只读,无副作用
